@@ -1,0 +1,46 @@
+class Nodo:
+    def __init__(self, dato):
+        self.dato = dato
+        self.izquierdo = None
+        self.derecho = None
+
+def agregar(raiz, dato):
+    if raiz is None:
+        return Nodo(dato)
+    elif dato < raiz.dato:
+        raiz.izquierdo = agregar(raiz.izquierdo, dato)
+    else:
+        raiz.derecho = agregar(raiz.derecho, dato)
+    return raiz
+
+def buscar(raiz, dato):
+    if raiz is None or raiz.dato == dato:
+        return raiz
+    if dato < raiz.dato:
+        return buscar(raiz.izquierdo, dato)
+    else:
+        return buscar(raiz.derecho, dato)
+
+def inorder(raiz):
+    if raiz:
+        inorder(raiz.izquierdo)
+        print(raiz.dato, end=" ")
+        inorder(raiz.derecho)
+
+# Crear el arbol y agregar datos
+raiz = None
+datos = [50, 30, 20, 40, 70, 60, 80]
+for dato in datos:
+    raiz = agregar(raiz, dato)
+
+# Buscar datos en el arbol
+for dato in datos:
+    nodo = buscar(raiz, dato)
+    if nodo:
+        print("Dato encontrado:", nodo.dato)
+    else:
+        print("Dato no encontrado:", dato)
+
+# Imprimir los datos del arbol en orden
+print("Inorder:")
+inorder(raiz)
